@@ -1,0 +1,3 @@
+"0","# Convert negative values to positive in new_cases and new_deaths columns"
+"0","covid_data$new_cases <- abs(covid_data$new_cases)"
+"0","covid_data$new_deaths <- abs(covid_data$new_deaths)"

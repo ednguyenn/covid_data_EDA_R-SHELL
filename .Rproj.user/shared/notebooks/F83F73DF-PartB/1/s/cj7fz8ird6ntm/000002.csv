@@ -1,0 +1,25 @@
+"0","# save working dataset in a variable
+dataset=""cleaned_olympics_tweets.csv""
+
+# Count any line with invalid id values
+awk -F, 'NR>1 && !($1 ~ /^[0-9]{19}$/)' $dataset | wc -l
+
+# Remove lines with invalid id values and save to a new file as filtered_tweets_1.csv
+awk -F, 'NR==1 || ($1 ~ /^[0-9]{19}$/)' $dataset > filtered_tweets_1.csv
+
+
+# taking a look at the result
+head -n 10 filtered_tweets_1.csv"
+"1","92823
+"
+"1","id,text,user_screen_name,user_location,retweet_count,favorited,favorite_count,user_description,user_created_at,user_followers,user_friends,date,language
+1418962410673689900,Heartiest congratulations to Mirabai Chanu for starting  the medal tally for India in the Tokyo Olympics 2020 by wiaEUR| https://t.co/NukYganXeA,SutejKumar4,New Delhi- India,0,FALSE,0,Believe in yourselfdY?(R)dY?3,20/04/2020 16:56,72,143,24/07/2021 15:52,en
+1418962529569670100,Congratulations to @mirabai_chanu for winning silver medal in weight lifting. This is first medal for India in TokyaEUR| https://t.co/NhVphfI01A,PrabhatFatehpur,Fatehpur-Uttar Pradesh,0,FALSE,1,Nationalist |Engineer |Plastics Technologist| 'CIPET'ian,14/11/2016 17:13,2721,353,24/07/2021 15:53,en
+1418962573756550100,Mirabai Chanu's maiden Olympic silver helped India clinch the joint-12th spot on the medals tally on Day 1 ataEUR| https://t.co/lPneDQFZbI,RS_02,NA,0,FALSE,0,Sports fanatic (crazy abt cricket)- media pro- traveler and big time foodie,25/12/2009 15:50,61,405,24/07/2021 15:53,en
+1418963345806329900,Proud to take a Bow and Congratulate @mirabai_chanu on the maiden Olympic Medal for Indian in 2021 Olympics.aEUR| https://t.co/iyN9FajRJ3,naveenieus,Coimbatore,0,FALSE,0,Technologist | Entrepreneur  Head of Ventures @LadderMinds Director - Technology Services @Acodeidea,1/07/2009 13:12,224,873,24/07/2021 15:56,en
+1418964164048030200,SCIKEY congratulates MIRABAI CHANU for winning the first medal for India in Tokyo Olympics 2020. What a proud momenaEUR| https://t.co/xrBSzXgSJO,scikeyglobal,Pune- India,0,FALSE,0,Digital Platform for Jobs- Work & Business solutions supported by a Professional Network & integrated Services Ecosystem,3/04/2018 7:55,144,224,24/07/2021 15:59,en
+1418964829944089900,Congratulations @mirabai_chanu #Olympics #Olympics2020 #OlympicGames #WINNER #Olympicstokyo2020 #sports #gamesaEUR| https://t.co/grAsMebgCS,v2vimal,Rajkot- India,0,FALSE,0,Founder & CEO of https://t.co/KLb7NO1qFk,18/04/2009 11:46,1369,34,24/07/2021 16:02,en
+1418964856213049900,Congratulations dY'? @mirabai_chanu! What an amazing start of India on first day of #TokyoOlympics2021. From all of usaEUR| https://t.co/nfo9OnWjdN,reviewbteam,NA,0,FALSE,0,ReviewBanana is notable #review site for products- companies- businesses- person- place and so on.,23/11/2020 18:23,2,3,24/07/2021 16:02,en
+1418964969647969800,Fabulous start by @mirabai_chanu  in the Tokyo Olympics. Congratulations for your victory- India is proud of you.aEUR| https://t.co/nVbClr363k,YashvitaJaiswal,Indore- India,1,FALSE,0,PROUD TO BE A BHARTIYA dY?(R)dY?3,21/05/2019 12:08,21,233,24/07/2021 16:03,en
+1418965006578809900,Rachita Panda Mistry- A former Indian Olympian who was participated in 2000 Sydney Olympics . She was first Odia ataEUR| https://t.co/Op3awFvNtq,KumarBimal3,Bhubaneswar,0,FALSE,1,Journalist- Writer and Odia Story teller,17/04/2014 17:07,49,637,24/07/2021 16:03,en
+"

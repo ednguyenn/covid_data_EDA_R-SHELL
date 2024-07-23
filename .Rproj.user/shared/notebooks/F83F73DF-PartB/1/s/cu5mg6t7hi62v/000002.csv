@@ -1,0 +1,23 @@
+"0","# set dataset variable
+dataset=""filtered_tweets_1.csv""
+
+# we have the following id: 1, user_screen_name: 3, user_created_at: 9, user_followers: 10, user_friends: 11, date: 12 to be extracted to new file
+awk -F, 'BEGIN {OFS="",""}
+    NR == 1 {print $1, $3, $9, $10, $11, $12}
+    NR > 1 && $10 > 1000 && $11 > 1000 {print $1, $3, $9, $10, $11, $12}' $dataset > filtered_tweets_2.csv
+
+# print new file
+echo ""First 10 lines of the filtered dataset for Task 4:""
+head -n 10 filtered_tweets_2.csv"
+"1","First 10 lines of the filtered dataset for Task 4:
+id,user_screen_name,user_created_at,user_followers,user_friends,date
+1418965464978310100,saumyadadoo,27/06/2009 10:01,2968,3661,24/07/2021 16:05
+1418976894129689900,nileshtrivedi,1/05/2008 12:01,4021,4462,24/07/2021 16:50
+1418980762146150100,aJPY? a?2aJPY? a?1aJPYEUR a?+a?^a?,0,A BRAVE SOLDIER WHO SERVE FOR NATION BY CRPF,11/02/2014 6:10,15
+1418982990286310100,Ram__Rathod,a?oaJPY?a??a??a?? a?oa? 3/4 a??aJPY?a??a?oa??aJPY?a??a? 3/4  a?--aJPY?a?oea??a? 3/4 a?? a?-a? 3/4 a?oea?aa? 3/4 aoeOEi,?. . d??~d???d??(R)d??-d??! d??EURd??oed??-d??cd???d??cd??!d??- .,2/02/2020 8:53,588
+1418983231257510100,vadabuoy, a?,a?|aJPY?a?ua??a?aaJPY?a??a? 3/4  a?!a?1aJPY?a??a? 3/4  a?ua?|a??aJPY?a??a??,29/06/2017 17:38,31
+1419331606913950200,stripeyspotty,1/01/2012 8:39,3109,1595,25/07/2021 16:19
+1419331622290150100,SilentFancyFox,?aEUR?dYOE^dY?odY?,| Mostly Art Retweets | Fancy Fox dY|S | Video Games | Movies | TV Shows | Feel Free to Chat! Telegram: SilentFancyFox,28/07/2014 5:06,38
+1419331659262950100,StrangeKeith,18/11/2009 9:00,4720,1194,25/07/2021 16:20
+1419331701004710100,naganosilver98, #LanguageLearning dY?-dY?.dY?adY?,dY?udY?1 #Photoshop dYZ? #Writing aoe? #Insomniac dYJPY',6/12/2020 3:03,45
+"

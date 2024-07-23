@@ -1,0 +1,162 @@
+---
+title: "Part A - covid19 Data Analysis with R"
+author: "Phuoc Vinh Dat Nguyen"
+date: "2024-07-06"
+output: pdf_document
+---
+
+# Part B: Shell Commands
+
+In this section, we will perform some basic EDA to Olympics_tweets datset by
+
+-   view first 10 lines
+
+-   count the number of lines
+
+-   view the column names
+
+-   count number of columns
+
+-   check if there is any missing values in the dataset
+
+```{bash}
+
+iconv -f utf-8 -t ascii//translit Olympics_tweets.csv -o cleaned_olympics_tweets.csv
+
+# save working dataset in a variable
+dataset="cleaned_olympics_tweets.csv"
+
+#first few lines of the dataset
+echo "First 10 lines of the dataset:"
+head -n 10 $dataset
+echo ""
+
+# Count the number of lines
+echo "Number of lines in the dataset "
+wc -l < $dataset
+echo ""
+
+# View the column names
+echo "Column names:"
+head -n 1 $dataset
+echo ""
+
+# count the number of columns
+echo "Number of columns in the dataset:"
+head -n 1 $dataset | tr ',' '\n' | wc -l
+echo ""
+
+# Check for missing values
+echo "Checking for missing values in each column:"
+awk -F, '
+NR == 1 {
+  for (i = 1; i <= NF; i++) {
+    colnames[i] = $i;
+  }
+}
+NR > 1 {
+  for (i = 1; i <= NF; i++) {
+    if ($i == "" || $i == "NA" || $i == " ") {
+      count[i]++;
+    }
+  }
+}
+END {
+  for (i = 1; i <= length(colnames); i++) {
+    printf "column %s has %d missing values\n", colnames[i], count[i];
+  }
+}' $dataset
+
+```
+
+**Task 1: Write commands** to count and then remove lines with an id that is not a number of 19 digits long, i.e., id values that contain anything other than numbers OR are of a length more/less than 19. Store the filtered set in a file named ***filtered_tweets_1.csv.***
+
+```{bash}
+# save working dataset in a variable
+dataset="cleaned_olympics_tweets.csv"
+
+# Count any line with invalid id values
+awk -F, 'NR>1 && !($1 ~ /^[0-9]{19}$/)' $dataset | wc -l
+
+# Remove lines with invalid id values and save to a new file as filtered_tweets_1.csv
+awk -F, 'NR==1 || ($1 ~ /^[0-9]{19}$/)' $dataset > filtered_tweets_1.csv
+
+
+# taking a look at the result
+head -n 10 filtered_tweets_1.csv
+```
+
+**Task 2:** **Identify** the date range of the tweets. Please note that the file is not guaranteed to be sorted and Nulls (NA and empty values) should not be considered. Hint: you can change the delimiter of the dataset to sort the date.
+
+```{bash}
+# Define the dataset
+dataset="filtered_tweets_1.csv"
+
+# Convert the delimiter to a tab and sort it out by date column and remove the invalid values
+awk -F, 'NR > 1 && $9 ~ /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}/ {print $9}' $dataset | sort | uniq > sorted_dates.txt
+
+echo "Date range of the tweets:"
+head -n 1 sorted_dates.txt
+tail -n 1 sorted_dates.txt
+```
+
+**Task 3: Select** a subset that includes the keyword 'Australia,' and then display the top 10 most frequent user_screen_names in that subset.
+
+```{bash}
+#set up some key variables
+dataset="filtered_tweets_1.csv"
+keyword="Australia"
+
+# filter keyword 'Australia'from row 'user_location'
+awk -F, -v keyword="$keyword" '$4 ~ keyword' $dataset > subset_australia.csv
+
+# extract the user_screen_name columnfrom the subset
+awk -F, 'NR > 1 {print $3}' subset_australia.csv > user_screen_names.txt
+
+# count of each user_screen_name and sort out 
+sort user_screen_names.txt | uniq -c | sort -nr > user_screen_name_counts.txt
+
+# print top 10 most frequent user_screen_names
+echo "10 most frequent user_screen_names:"
+head -n 10 user_screen_name_counts.txt
+```
+
+**Task 4: Filter** your data based on the following conditions:
+
+-   Keep only these columns: id, user_screen_name, user_created_at, user_followers, user_friends, and date (Note: keep column names as well)
+
+-   Keep the tweets with user_friends and user_followers each larger than 1000
+
+Export the above-selected data to a new file named ***filtered_tweets_2.csv***.
+
+In the file ***filtered_tweets_2.csv***, how many tweets have an NA value in the last column (i.e., the column 'date')? How many user accounts were created prior to 2020? Please note that the column 'user_created_at' specifies when a user account was created and one Twitter user might have produced multiple tweets and you are supposed to count the accounts.
+
+```{bash}
+# set dataset variable
+dataset="filtered_tweets_1.csv"
+
+# we have the following id: 1, user_screen_name: 3, user_created_at: 9, user_followers: 10, user_friends: 11, date: 12 to be extracted to new file
+awk -F, 'BEGIN {OFS=","}
+    NR == 1 {print $1, $3, $9, $10, $11, $12}
+    NR > 1 && $10 > 1000 && $11 > 1000 {print $1, $3, $9, $10, $11, $12}' $dataset > filtered_tweets_2.csv
+
+# print new file
+echo "First 10 lines of the filtered dataset for Task 4:"
+head -n 10 filtered_tweets_2.csv
+```
+
+```{bash}
+# set up new dataset 
+dataset="filtered_tweets_2.csv"
+
+# Count tweets with 'NA' values or NULL in the date
+na_count=$(awk -F, 'NR > 1 && ($6 == "" || $6 == "NA" || $6 == " ") {count++} END {print count}' $dataset)
+
+echo "Number of tweets with 'NA' or NULL in the 'date': $na_count"
+
+
+# Count unique user accounts were created before 2020
+unique_user_count=$(awk -F, 'NR > 1 && $3 != "" {split($3, a, "/"); if (a[3] < 2020) print $2}' $dataset | sort | uniq | wc -l)
+echo "Number of unique user accounts created before 2020: $unique_user_count"
+
+```

@@ -1,0 +1,28 @@
+"0","#set up some key variables
+dataset=""filtered_tweets_1.csv""
+keyword=""Australia""
+
+# filter keyword 'Australia'from row 'user_location'
+awk -F, -v keyword=""$keyword"" '$4 ~ keyword' $dataset > subset_australia.csv
+
+# extract the user_screen_name columnfrom the subset
+awk -F, 'NR > 1 {print $3}' subset_australia.csv > user_screen_names.txt
+
+# count of each user_screen_name and sort out 
+sort user_screen_names.txt | uniq -c | sort -nr > user_screen_name_counts.txt
+
+# print top 10 most frequent user_screen_names
+echo ""10 most frequent user_screen_names:""
+head -n 10 user_screen_name_counts.txt"
+"1","10 most frequent user_screen_names:
+      7 Avatar5991
+      4 LizannV
+      4 abcnews
+      3 westaustralian
+      3 theage
+      3 newscomauHQ
+      3 greysfan
+      3 AUSOlympicTeam
+      3 abcsport
+      2 tvtonightau
+"

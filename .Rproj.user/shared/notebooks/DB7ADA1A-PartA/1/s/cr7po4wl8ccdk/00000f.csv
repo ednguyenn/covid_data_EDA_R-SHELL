@@ -1,0 +1,2 @@
+"0","# Remove row 1357 from joined_data which contains a abnormal value"
+"0","joined_data <- joined_data[-1357, ]"

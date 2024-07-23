@@ -1,0 +1,2 @@
+"0","# Drop rows with any NA values"
+"0","df_clean <- na.omit(df)"

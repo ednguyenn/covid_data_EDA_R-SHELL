@@ -1,0 +1,5 @@
+"0","# Change 'US' to 'United States' in lockdown_aggregated"
+"0","lockdown_aggregated$Country[lockdown_aggregated$Country == ""US""] <- ""United States"""
+"0",""
+"0","# Change 'U.K.' to 'United Kingdom' in vaccine_data"
+"0","vaccine_data$Country[vaccine_data$Country == ""U.K.""] <- ""United Kingdom"""

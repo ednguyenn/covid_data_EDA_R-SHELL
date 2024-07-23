@@ -1,0 +1,7 @@
+"0",""
+"0","print(""Performance with K-fold Cross-Validation:"")"
+"1","[1]"
+"1"," ""Performance with K-fold Cross-Validation:"""
+"1","
+"
+"0","print(performance_cv)"

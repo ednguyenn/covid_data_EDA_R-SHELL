@@ -1,0 +1,84 @@
+"0","
+iconv -f utf-8 -t ascii//translit Olympics_tweets.csv -o cleaned_olympics_tweets.csv
+
+# save working dataset in a variable
+dataset=""cleaned_olympics_tweets.csv""
+
+#first few lines of the dataset
+echo ""First 10 lines of the dataset:""
+head -n 10 $dataset
+echo """"
+
+# Count the number of lines
+echo ""Number of lines in the dataset ""
+wc -l < $dataset
+echo """"
+
+# View the column names
+echo ""Column names:""
+head -n 1 $dataset
+echo """"
+
+# count the number of columns
+echo ""Number of columns in the dataset:""
+head -n 1 $dataset | tr ',' '\n' | wc -l
+echo """"
+
+# Check for missing values
+echo ""Checking for missing values in each column:""
+awk -F, '
+NR == 1 {
+  for (i = 1; i <= NF; i++) {
+    colnames[i] = $i;
+  }
+}
+NR > 1 {
+  for (i = 1; i <= NF; i++) {
+    if ($i == """" || $i == ""NA"" || $i == "" "") {
+      count[i]++;
+    }
+  }
+}
+END {
+  for (i = 1; i <= length(colnames); i++) {
+    printf ""column %s has %d missing values\n"", colnames[i], count[i];
+  }
+}' $dataset
+"
+"1","First 10 lines of the dataset:
+id,text,user_screen_name,user_location,retweet_count,favorited,favorite_count,user_description,user_created_at,user_followers,user_friends,date,language
+141896231718678e4,Mirabai Chanu's maiden Olympic silver helped India clinch joint-12th spot on the medals tally on Day 1 ataEUR| https://t.co/ksy8OvaJrl,ITGDsports,Noida- India,1,FALSE,1,Live cricket scores- news- analysis and fun facts on all your favourite sports.,26/09/2017 10:57,9333,28,24/07/2021 15:52,en
+141896235133692e4,.@mirabai_chanu brings home first silver medal on Day 1. DSEU congratulates her on this achievement. A brilliant staEUR| https://t.co/alIvBeujfH,dseu_official,NA,0,FALSE,1,The official Twitter account for Delhi Skill and Entrepreneurship Univeristy.,12/11/2020 9:01,1168,4,24/07/2021 15:52,en
+1418962410673689900,Heartiest congratulations to Mirabai Chanu for starting  the medal tally for India in the Tokyo Olympics 2020 by wiaEUR| https://t.co/NukYganXeA,SutejKumar4,New Delhi- India,0,FALSE,0,Believe in yourselfdY?(R)dY?3,20/04/2020 16:56,72,143,24/07/2021 15:52,en
+141896246682283e4,Hearty congratulations to ace Indian weightlifter @mirabai_chanu for winning a Silver in the womenaEUR(TM)s #WeightliftingaEUR| https://t.co/QJqHGstelZ,NsChandapaka,Nalgonda- Telangana,1,FALSE,0,Govt Teacher | YouTuber | Ambedkarist | Indian | Cricket Lover | Founder of @BORN4WIN | Social Activist | Kargil Vijay Diwas,8/08/2017 1:26,5907,60,24/07/2021 15:53,en
+1418962529569670100,Congratulations to @mirabai_chanu for winning silver medal in weight lifting. This is first medal for India in TokyaEUR| https://t.co/NhVphfI01A,PrabhatFatehpur,Fatehpur-Uttar Pradesh,0,FALSE,1,Nationalist |Engineer |Plastics Technologist| 'CIPET'ian,14/11/2016 17:13,2721,353,24/07/2021 15:53,en
+141896254617485e4,@narendramodi @Tokyo2020 @mirabai_chanu Noble Group congratulates  India's Pride Mirabai Chanu on her winning ist TaEUR| https://t.co/4BizUPL60n,JaiHanu32567563,Panchkula-India,0,FALSE,0,MBA(MDU)- FORMER GM HARYANA,29/07/2017 16:19,1,84,24/07/2021 15:53,en
+1418962573756550100,Mirabai Chanu's maiden Olympic silver helped India clinch the joint-12th spot on the medals tally on Day 1 ataEUR| https://t.co/lPneDQFZbI,RS_02,NA,0,FALSE,0,Sports fanatic (crazy abt cricket)- media pro- traveler and big time foodie,25/12/2009 15:50,61,405,24/07/2021 15:53,en
+141896264720307e4,Congratulations #india #olympics https://t.co/SApwOjumgR,YSR4Ever,United States,1,FALSE,2,YSRCP USA Leader- APNRTS USA Regional Coordinator- Advisor- Investor & IT Consultant. Re-tweets are not endorsements.,30/11/2010 16:05,7247,185,24/07/2021 15:53,en
+141896272332555e4,Congratulations to Mirabai Chanu getting first medal for INDIA on the first day of the #Olympics  at Tokyo- gettingaEUR| https://t.co/8370zb4rhg,Pravenbhavani,NA,0,FALSE,0,NA,31/12/2017 6:33,180,9,24/07/2021 15:54,en
+
+Number of lines in the dataset 
+114214
+
+Column names:
+id,text,user_screen_name,user_location,retweet_count,favorited,favorite_count,user_description,user_created_at,user_followers,user_friends,date,language
+
+Number of columns in the dataset:
+13
+
+Checking for missing values in each column:
+"
+"1","column id has 0 missing values
+column text has 0 missing values
+column user_screen_name has 757 missing values
+column user_location has 31114 missing values
+column retweet_count has 1078 missing values
+column favorited has 445 missing values
+column favorite_count has 198 missing values
+column user_description has 12843 missing values
+column user_created_at has 1645 missing values
+column user_followers has 818 missing values
+column user_friends has 608 missing values
+column date has 286 missing values
+column language has 478 missing values
+"

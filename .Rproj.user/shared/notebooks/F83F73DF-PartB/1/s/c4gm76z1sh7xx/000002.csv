@@ -1,0 +1,16 @@
+"0","# set up new dataset 
+dataset=""filtered_tweets_2.csv""
+
+# Count tweets with 'NA' values or NULL in the date
+na_count=$(awk -F, 'NR > 1 && ($6 == """" || $6 == ""NA"" || $6 == "" "") {count++} END {print count}' $dataset)
+
+echo ""Number of tweets with 'NA' or NULL in the 'date': $na_count""
+
+
+# Count unique user accounts were created before 2020
+unique_user_count=$(awk -F, 'NR > 1 && $3 != """" {split($3, a, ""/""); if (a[3] < 2020) print $2}' $dataset | sort | uniq | wc -l)
+echo ""Number of unique user accounts created before 2020: $unique_user_count""
+"
+"1","Number of tweets with 'NA' or NULL in the 'date': 17
+Number of unique user accounts created before 2020: 3758
+"

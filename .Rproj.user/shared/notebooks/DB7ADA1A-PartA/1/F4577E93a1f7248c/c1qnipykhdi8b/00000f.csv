@@ -1,0 +1,5 @@
+"0","# Read 3 datasets"
+"0","covid_data <- read.csv(""Covid-data.csv"")"
+"0","lockdown_data <- read.csv(""CountryLockdowndates.csv"")"
+"0","vaccine_data <- read.csv(""WorldwideVaccineData.csv"")"
+"0",""

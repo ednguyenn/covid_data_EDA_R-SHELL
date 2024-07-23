@@ -1,0 +1,8 @@
+"0",""
+"0","# Step 5: Compare the results"
+"0","print(""Performance with simple training and testing split:"")"
+"1","[1]"
+"1"," ""Performance with simple training and testing split:"""
+"1","
+"
+"0","print(performance_split)"

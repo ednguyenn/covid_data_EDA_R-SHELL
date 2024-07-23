@@ -1,0 +1,2 @@
+"0","joined_data$date <- as.Date(joined_data$date)"
+"0","joined_data$lockdown_date <- as.Date(joined_data$lockdown_date)"

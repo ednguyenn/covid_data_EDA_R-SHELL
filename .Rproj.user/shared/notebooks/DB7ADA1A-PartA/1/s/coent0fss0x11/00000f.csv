@@ -1,0 +1,6 @@
+"0",""
+"0","lockdown_aggregated <- lockdown_data %>%"
+"0","  group_by(Country.Region) %>%"
+"0","  summarize(Date = first(na.omit(Date))) %>%"
+"0","  ungroup() %>%"
+"0","  rename(Country = Country.Region)"

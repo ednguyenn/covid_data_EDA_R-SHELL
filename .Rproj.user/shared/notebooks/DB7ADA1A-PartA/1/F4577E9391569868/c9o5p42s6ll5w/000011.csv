@@ -1,0 +1,5 @@
+"0","# Convert Date column to Date object"
+"0","lockdown_data$Date <- dmy(lockdown_data$Date)"
+"0",""
+"0","# Format Date column to YYYY-MM-DD"
+"0","lockdown_data$Date <- format(lockdown_data$Date, ""%Y-%m-%d"")"

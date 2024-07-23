@@ -1,0 +1,8 @@
+"0",""
+"0","# Check if there are any odd values in the top 10"
+"0","# Print locations that might look unusual or unexpected"
+"0","odd_locations <- top_10_locations %>%"
+"0","  filter(grepl(""[0-9]"", user_location) | grepl(""[^A-Za-z0-9 ]"", user_location))"
+"0",""
+"0","# Print odd values"
+"0","print(odd_locations)"

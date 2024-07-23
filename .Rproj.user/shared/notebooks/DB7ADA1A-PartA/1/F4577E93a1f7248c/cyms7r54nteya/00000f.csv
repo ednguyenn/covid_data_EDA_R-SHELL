@@ -1,0 +1,2 @@
+"0","covid_data <- standardize_location(covid_data, ""location"", location_mapping)"
+"0",""
